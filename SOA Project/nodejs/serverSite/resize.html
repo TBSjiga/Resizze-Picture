@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<meta charset="utf-8"/>
+<title>RESIZZE PICTURE</title>
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700|Open+Sans:800&display=swap&subset=cyrillic');
+
+    body {
+        background-color: #54848e;
+    }
+
+    p {
+        font-family: 'Open Sans Condensed', sans-serif;
+        font-size: 25pt;
+        color: aliceblue;
+        text-align: center;
+        margin-left: 40%;
+        margin-top: 0px;
+        vertical-align: middle;
+        margin: 10px auto auto;
+    }
+
+    p.disc {
+        font-size: 15pt;
+    }
+
+    input{
+        font-family: 'Open Sans Condensed', sans-serif;
+        text-align: center;
+        width: 310px;
+        font-size: 20pt;
+        background-color: aliceblue;
+    }
+
+    #name {
+        font-size: 70pt;
+        line-height: 1.1;
+    }
+
+    button {
+        font-family: 'Open Sans Condensed', sans-serif;
+        text-align: center;
+        width: 314px;
+        border-radius: 10px;
+        font-size: 25pt;
+        background: linear-gradient(to right, #214455 ,#3C7C81);
+        color: aliceblue;
+    }
+
+    #link {
+        font-family: 'Open Sans Condensed', sans-serif;
+        text-align: center;
+        font-size: 20pt;
+    }
+
+    button:hover {
+        box-shadow: inset 0 0 0 2px #DDDDDD;
+        opacity: 0.9;
+    }
+</style>
+
+<script type="text/javascript">
+
+function resize() //срабатывает при нажатии на кнопку
+{
+    //получаем данные введенные в инпуты
+    var width = document.getElementById('wdInput').value; 
+    var height = document.getElementById('hgInput').value;
+
+    if(document.getElementById('chkInput').checked)
+        var check = true;
+    else    
+        var check = false;
+
+    if(check == false){
+        if(width < 20 || width > 3840 || width == null){
+            alert("Введите разрешенную ширину");
+        }else{
+            if(height < 20 || height > 2160 || height == null){
+                alert("Введите разрешенную высоту");
+            }else{
+                //грузим данные на сервер
+                var request = new XMLHttpRequest();
+                request.open("GET", "http://localhost:5001/api/resize/resize?width=" + width + "&height=" + height + "&check=" + check, false);
+                request.send();
+                var status = request.status;
+                var res;
+                if(status==200){
+                    document.write(request.responseText);
+                    
+                    btn=document.createElement("img");
+                    btn.innerHTML = "src=" + request.responseText + "/>";
+
+                }else if(status==404)
+                    document.write("Ресурс не найден");
+                else
+                    document.write(request. statusText);
+                
+                console.log(res);
+            }
+        }   
+    }else{
+        if(width < 0 || width > 200 || width == null){
+            alert("Введите разрешенную ширину в процентах");
+        }else{
+            if(height < 0 || height > 200 || height == null){
+                alert("Введите разрешенную высоту в процентах");
+            }else{
+                //грузим данные на сервер
+                var request = new XMLHttpRequest();
+                request.open("GET", "http://localhost:5001/api/resize/resize?width=" + width + "&height=" + height + "&check=" + check, false);
+                request.send();
+                var status = request.status;
+                var res;
+                if(status==200){
+
+                    btn=document.createElement("img");
+                    btn.innerHTML = "src=" + request + "/>";
+
+                }else if(status==404)
+                    document.write("Ресурс не найден");
+                else
+                    document.write(request. statusText);
+                
+                console.log(res);
+            }
+        } 
+    }
+}
+    
+
+</script>
+
+</head>
+<body>
+    <p id="name">Resizze Picture</p>
+    <p id="reg">Выбор параметров</p>
+    
+    <form>
+    <p id="wd">Ширина</p>
+    <p class="disc" id="wdDesc">Допустимые значения: 20 - 3840 пикселей или 0 - 200 процентов.</p>
+    
+    <p id="width"><input id="wdInput" type="number" size="40" border=5px></p><br>
+    
+    <p id="hg">Высота</p>
+    <p class="disc" id="hgDesc">Допустимые значения: 20 - 2160 пикселей или 0 - 200 процентов.</p>
+    
+    <p id="height"><input id="hgInput" type="number" size="40" border=5px></p><br>
+    
+    <p id="chk">Пиксели/Проценты</p>
+    <p class="disc" id="chkDesc">o - Пиксели / x - Проценты</p>
+    
+    <p id="check"><input id="chkInput" type="checkbox" style="transform:scale(3.0);" border=5px></p><br>
+    </form>
+    
+    <p id ="resize">
+        <button id="resizeButton" onclick="resize()">Загрузить</button>
+    </p>
+    
+    
+</body>
+</html>    
