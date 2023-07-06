@@ -10,7 +10,7 @@ Alekseev Dmitrii IKMO-02-21 SOA Project
 </p>
 
 <p align="center">
-  <img src="gif/image.gif" />
+  <img src="gif/image.png" />
 </p>
 
 ## Стек используемых технологий
