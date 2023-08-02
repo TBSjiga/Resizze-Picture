@@ -1,4 +1,4 @@
-# SOA-Project
+# Resizze-Picture
 Alekseev Dmitrii IKMO-02-21 SOA Project
 
 Онлайн сервис сжимания изображений
